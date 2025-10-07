@@ -339,7 +339,13 @@ class calcapishipShipping extends waShipping
             if (strtotime($departure_datetime) < time()) {
                 $departure_datetime = shopDepartureDateTimeFacade::getDeparture();
             }
-            $params['pickupDate'] = date('Y-m-d', strtotime($departure_datetime));
+            $pickup_timestamp = strtotime($departure_datetime);
+            if ($pickup_timestamp) {
+                $pickup_timestamp = $this->getNearestWorkingTimestamp($pickup_timestamp);
+                $params['pickupDate'] = date('Y-m-d', $pickup_timestamp);
+            } else {
+                $params['pickupDate'] = date('Y-m-d');
+            }
         }
         $rates = array();
         $cached_providers = new waVarExportCache($this->getSessionKey('providers'), $this->getSessionTtl(), 'shipping_calcapiship');
@@ -2393,12 +2399,153 @@ class calcapishipShipping extends waShipping
     private function convertRatesEstimatedDeliveryDate($provider_key, $tariff, $format = 'humandate')
     {
         $converted_days = $this->convertRatesEstimatedDeliveryDays($provider_key, $tariff);
+        $base_timestamp = $this->getNearestWorkingTimestamp();
         $converted_date = array(
-            waDateTime::format($format, strtotime('+' . $converted_days[0] . 'days')),
-            waDateTime::format($format, strtotime('+' . $converted_days[1] . 'days')),
+            waDateTime::format($format, strtotime('+' . $converted_days[0] . ' days', $base_timestamp)),
+            waDateTime::format($format, strtotime('+' . $converted_days[1] . ' days', $base_timestamp)),
         );
         $converted_date = array_unique($converted_date);
         return $converted_date;
+    }
+
+    /**
+     * Returns the timestamp of the nearest working day according to storefront settings
+     *
+     * @param int|null $timestamp
+     * @return int
+     */
+    private function getNearestWorkingTimestamp($timestamp = null)
+    {
+        if ($timestamp === null) {
+            $timestamp = time();
+        }
+
+        $weekend_days = $this->getStorefrontWeekendDays();
+        if (empty($weekend_days)) {
+            return $timestamp;
+        }
+
+        $limit = 14;
+        while (in_array((int) waDateTime::date('w', $timestamp), $weekend_days, true) && $limit > 0) {
+            $timestamp = strtotime('+1 day', $timestamp);
+            $limit--;
+        }
+
+        return $timestamp;
+    }
+
+    /**
+     * Returns storefront weekend days (0-6 with Sunday = 0)
+     *
+     * @return array
+     */
+    private function getStorefrontWeekendDays()
+    {
+        static $weekend_days = null;
+
+        if ($weekend_days !== null) {
+            return $weekend_days;
+        }
+
+        $weekend_days = array(0, 6);
+
+        $schedule = $this->getStorefrontSchedule();
+        if (!empty($schedule)) {
+            $detected_weekends = array();
+            if (!empty($schedule['weekends']) && is_array($schedule['weekends'])) {
+                $detected_weekends = $schedule['weekends'];
+            } elseif (!empty($schedule['workdays']) && is_array($schedule['workdays'])) {
+                $all_days = range(0, 6);
+                $workdays = array();
+                foreach ($schedule['workdays'] as $day) {
+                    $workdays[] = $this->normalizeWeekday($day);
+                }
+                $detected_weekends = array_diff($all_days, $workdays);
+            } elseif (!empty($schedule['days']) && is_array($schedule['days'])) {
+                foreach ($schedule['days'] as $day_index => $day_data) {
+                    $is_weekend = false;
+                    if (is_array($day_data)) {
+                        if (isset($day_data['weekend'])) {
+                            $is_weekend = (bool) $day_data['weekend'];
+                        } elseif (isset($day_data['status'])) {
+                            $is_weekend = ($day_data['status'] === 'weekend');
+                        }
+                    }
+                    if ($is_weekend) {
+                        $detected_weekends[] = $this->normalizeWeekday($day_index);
+                    }
+                }
+            }
+
+            if (!empty($detected_weekends)) {
+                $weekend_days = array_values(array_unique(array_map(array($this, 'normalizeWeekday'), $detected_weekends)));
+                sort($weekend_days);
+            }
+        }
+
+        return $weekend_days;
+    }
+
+    /**
+     * Returns storefront schedule array
+     *
+     * @return array
+     */
+    private function getStorefrontSchedule()
+    {
+        $storefront = $this->getStorefrontIdentifier();
+        if (empty($storefront) || !class_exists('waModel')) {
+            return array();
+        }
+
+        try {
+            $model = new waModel();
+            $sql = 'SELECT value FROM shop_storefront_settings WHERE storefront = s:storefront AND name = s:name';
+            $value = $model->query($sql, array('storefront' => $storefront, 'name' => 'schedule'))->fetchField();
+            if (!empty($value)) {
+                $decoded = @json_decode($value, true);
+                if (is_array($decoded)) {
+                    return $decoded;
+                }
+            }
+        } catch (Exception $e) {
+            // ignore database errors
+        }
+
+        return array();
+    }
+
+    /**
+     * Returns storefront identifier used in shop_storefront_settings
+     *
+     * @return string|null
+     */
+    private function getStorefrontIdentifier()
+    {
+        $storefront = $this->getPackageProperty('storefront');
+        if (!empty($storefront)) {
+            return $storefront;
+        }
+
+        $storefront = waRequest::param('storefront');
+        if (!empty($storefront)) {
+            return $storefront;
+        }
+
+        return null;
+    }
+
+    /**
+     * Normalizes weekday value to 0-6 range
+     *
+     * @param int|string $day
+     * @return int
+     */
+    private function normalizeWeekday($day)
+    {
+        $day = (int) $day;
+        $day = (($day % 7) + 7) % 7;
+        return $day;
     }
 
     /**
