@@ -1,0 +1,221 @@
+{$controls}
+<script>
+    'use strict';
+    (function ($) {
+        $(document).ready(function () {
+            $('#wahtmlcontrol_shipping_settings_unsafe_mode').on('click', function (e) {
+                if (!$('#wahtmlcontrol_shipping_settings_test_mode').is(':checked')) {
+                    updateSettings();
+                }
+            });
+            $('#wahtmlcontrol_shipping_settings_test_mode').on('click', function (e) {
+                updateSettings();
+            });
+            $('#wahtmlcontrol_shipping_settings_username').on('change', function (e) {
+                if (
+                    !$('#wahtmlcontrol_shipping_settings_test_mode').is(':checked') &&
+                    $('#wahtmlcontrol_shipping_settings_password').val() &&
+                    $(this).val()
+                ) {
+                    updateSettings();
+                }
+            });
+            $('#wahtmlcontrol_shipping_settings_password').on('change', function (e) {
+                if (
+                    !$('#wahtmlcontrol_shipping_settings_test_mode').is(':checked') &&
+                    $('#wahtmlcontrol_shipping_settings_username').val() &&
+                    $(this).val()
+                ) {
+                    updateSettings();
+                }
+            });
+            updateAllProviders();
+            updateOneProvider();
+
+            function updateSettings() {
+                let isLoading = false,
+                    providers = $("label[for='wahtmlcontrol_shipping_settings_providers']").parents('.field'),
+                    deliveryTypes = $("label[for='wahtmlcontrol_shipping_settings_delivery_types']").parents('.field'),
+                    pickupTypes = $("label[for='wahtmlcontrol_shipping_settings_pickup_types']").parents('.field');
+                if (!isLoading) {
+                    isLoading = true;
+                    providers.find('.name').find('.loading').removeClass('hidden');
+                    deliveryTypes.find('.name').find('.loading').removeClass('hidden');
+                    pickupTypes.find('.name').find('.loading').removeClass('hidden');
+                    providers.find('.value').html('');
+                    deliveryTypes.find('.value').html('');
+                    pickupTypes.find('.value').html('');
+                    $.ajax({
+                        url: '{$wa->currentUrl()}',
+                        data: $(
+                            '#wahtmlcontrol_shipping_settings_unsafe_mode,' +
+                            '#wahtmlcontrol_shipping_settings_test_mode,' +
+                            '#wahtmlcontrol_shipping_settings_username,' +
+                            '#wahtmlcontrol_shipping_settings_password'
+                        ).serialize(),
+                        type: 'post',
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.status == 'ok') {
+                                if (response.data.providers) {
+                                    providers.find('.value').html(response.data.providers);
+                                    updateAllProviders();
+                                    updateOneProvider();
+                                }
+                                if (response.data.delivery_types) {
+                                    deliveryTypes.find('.value').html(response.data.delivery_types);
+                                }
+                                if (response.data.pickup_types) {
+                                    pickupTypes.find('.value').html(response.data.pickup_types);
+                                }
+                            }
+                        },
+                        complete: function () {
+                            isLoading = false;
+                            providers.find('.name').find('.loading').addClass('hidden');
+                            deliveryTypes.find('.name').find('.loading').addClass('hidden');
+                            pickupTypes.find('.name').find('.loading').addClass('hidden');
+                        }
+                    });
+                }
+            }
+
+            function updateAllProviders() {
+                $("input[type=checkbox][name^='shipping[settings][providers]']").each(function (index) {
+                    updateProvider($(this));
+                });
+            }
+
+            function updateOneProvider() {
+                $("input[type=checkbox][name^='shipping[settings][providers]']").on('click', function (e) {
+                    updateProvider($(this));
+                });
+            }
+
+            function updateProvider(provider) {
+                let isLoading = false,
+                    providerContainer = provider.parent('.calcapiship_settings');
+                if (provider.is(':checked')) {
+                    if (!isLoading) {
+                        isLoading = true;
+                        providerContainer.find('.loading').removeClass('hidden');
+                        $.ajax({
+                            url: '{$wa->currentUrl()}',
+                            data: $(
+                                '#wahtmlcontrol_shipping_settings_unsafe_mode,' +
+                                '#wahtmlcontrol_shipping_settings_test_mode,' +
+                                '#wahtmlcontrol_shipping_settings_username,' +
+                                '#wahtmlcontrol_shipping_settings_password,' +
+                                '#' + provider.attr('id')
+                            ).serialize(),
+                            type: 'post',
+                            dataType: 'json',
+                            success: function (response) {
+                                if (response.status == 'ok') {
+                                    if (provider.is(':checked')) {
+                                        if (
+                                            response.data.rules &&
+                                            !providerContainer.find('.rules').length
+                                        ) {
+                                            providerContainer.append(response.data.rules);
+                                        }
+                                        if (
+                                            response.data.tariffs &&
+                                            !providerContainer.find('.tariffs').length
+                                        ) {
+                                            providerContainer.append(response.data.tariffs);
+                                            selectPage(provider);
+                                            selectTariff(provider);
+                                        }
+                                    } else {
+                                        providerContainer.find('.rules').remove();
+                                        providerContainer.find('.tariffs').remove();
+                                    }
+                                }
+                            },
+                            complete: function () {
+                                isLoading = false;
+                                providerContainer.find('.loading').addClass('hidden');
+                            }
+                        });
+                    }
+                } else {
+                    providerContainer.find('.rules').remove();
+                    providerContainer.find('.tariffs').remove();
+                }
+            }
+
+            function selectPage(provider) {
+                let isLoading = false,
+                    providerContainer = provider.parent('.calcapiship_settings'),
+                    tariffs = providerContainer.find("input[type=hidden][name='shipping[settings][providers][" + provider.val() + "][selected_tariffs]']"),
+                    pages = providerContainer.find('.tariffs a');
+                pages.on('click', function (e) {
+                    if (!isLoading) {
+                        isLoading = true;
+                        providerContainer.find('.loading').removeClass('hidden');
+                        $.ajax({
+                            url: $(this).attr('href'),
+                            data: $(
+                                '#wahtmlcontrol_shipping_settings_unsafe_mode,' +
+                                '#wahtmlcontrol_shipping_settings_test_mode,' +
+                                '#wahtmlcontrol_shipping_settings_username,' +
+                                '#wahtmlcontrol_shipping_settings_password,' +
+                                '#' + provider.attr('id') + ',' +
+                                '#' + tariffs.attr('id')
+                            ).serialize(),
+                            type: 'post',
+                            dataType: 'json',
+                            success: function (response) {
+                                if (response.status == 'ok') {
+                                    providerContainer.find('.tariffs').remove();
+                                    if (provider.is(':checked')) {
+                                        if (
+                                            response.data.tariffs &&
+                                            !providerContainer.find('.tariffs').length
+                                        ) {
+                                            providerContainer.append(response.data.tariffs);
+                                            selectPage(provider);
+                                            selectTariff(provider);
+                                        }
+                                    }
+                                }
+                            },
+                            complete: function () {
+                                isLoading = false;
+                                providerContainer.find('.loading').addClass('hidden');
+                            }
+                        });
+                    }
+                    return false;
+                });
+            }
+
+            function selectTariff(provider) {
+                $("input[type=checkbox][name^='shipping[settings][providers][" + provider.val() + "][tariffs]']").on('click', function (e) {
+                    let tariff = $(this),
+                        tariffs = [],
+                        tariffsContainer = tariff.parent('.tariffs').find("input[type=hidden][name='shipping[settings][providers][" + provider.val() + "][selected_tariffs]']");
+                    if (tariffsContainer.val()) {
+                        tariffs = JSON.parse(tariffsContainer.val());
+                    }
+                    if (tariff.is(':checked')) {
+                        if (!tariffs.includes(tariff.val())) {
+                            tariffs.push(tariff.val());
+                        }
+                    } else {
+                        let index = tariffs.indexOf(tariff.val());
+                        if (index != -1) {
+                            tariffs.splice(index, 1);
+                        }
+                    }
+                    if (tariffs.length) {
+                        tariffsContainer.val(JSON.stringify(tariffs));
+                    } else {
+                        tariffsContainer.val('');
+                    }
+                });
+            }
+        });
+    })(jQuery);
+</script>

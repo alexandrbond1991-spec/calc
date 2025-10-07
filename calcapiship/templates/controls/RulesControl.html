@@ -1,0 +1,126 @@
+<table class="zebra" id="{$params.id}">
+    <tbody>
+    {if isset($params.value.scheme)}
+    {section name=i loop=$params.value.scheme}
+    <tr>
+        <td class="min-width">
+            <i class="icon16 sort"></i>
+        </td>
+        <td>
+            {$p->convertRules($name, $params.value, $smarty.section.i.index)}
+        </td>
+        <td class="min-width">
+            <i class="icon16 delete"></i>
+        </td>
+    </tr>
+    {/section}
+    {else}
+    <tr>
+        <td class="min-width">
+            <i class="icon16 sort"></i>
+        </td>
+        <td>
+            {$p->convertRules($name)}
+        </td>
+        <td class="min-width">
+            <i class="icon16 delete"></i>
+        </td>
+    </tr>
+    {/if}
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="3">
+            <i class="icon16 add"></i>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+<style>
+    .zebra .add,
+    .zebra .delete {
+        cursor: pointer;
+    }
+</style>
+<script>
+    'use strict';
+    (function ($) {
+        $(document).ready(function () {
+            $('#{$params.id}').find("select[name$='[rules][scheme][]']").on('change', function (e) {
+                let tr = $(this).parents('tr'),
+                    schemes = tr.find("[class^='scheme']");
+                hideSchemes(schemes);
+                if ($(this).val()) {
+                    let scheme = tr.find('.' + $(this).val());
+                    showScheme(scheme);
+                }
+            });
+            $('#{$params.id}').find("select[name$='[rules][measure][]']").on('change', function (e) {
+                let percent = $(this).parents('tr').find("select[name$='[rules][percent][]']");
+                if ($(this).val() == 'percent') {
+                    showPercent(percent);
+                } else {
+                    hidePercent(percent);
+                }
+            });
+            $('#{$params.id}').on('keypress keyup blur', "input[name*='value']", function (e) {
+                $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+                if (
+                    (
+                        e.which != 46 ||
+                        $(this).val().indexOf('.') != -1
+                    ) && (
+                        e.which < 48 ||
+                        e.which > 57
+                    )
+                ) {
+                    e.preventDefault();
+                }
+            });
+            $('#{$params.id}').on('click', '.add', function (e) {
+                e.preventDefault();
+                let tr = $('#{$params.id} tbody tr:last').clone(true, true),
+                    schemes = tr.find("[class^='scheme']");
+                hideSchemes(schemes);
+                tr.find('select').find('option:eq(0)').attr('selected', true);
+                tr.appendTo($('#{$params.id} tbody'));
+            });
+            $('#{$params.id}').on('click', '.delete', function (e) {
+                e.preventDefault();
+                if ($('#{$params.id} tbody tr').length > 1) {
+                    $(this).closest('tr').remove();
+                }
+            });
+            $('#{$params.id}').sortable({
+                containment: 'parent',
+                items: '>tbody>tr',
+                axis: 'y'
+            });
+
+            function showScheme(scheme) {
+                scheme.find('input').attr('disabled', false);
+                scheme.find('select').attr('disabled', false);
+                scheme.find('select').removeClass('hidden');
+                scheme.removeClass('hidden');
+            }
+
+            function hideSchemes(schemes) {
+                schemes.find("input[type!='hidden']").val(0);
+                schemes.find("input[name*='description']").val('');
+                schemes.find('input').attr('disabled', true);
+                schemes.find('select').find('option:eq(0)').attr('selected', true);
+                schemes.find('select').attr('disabled', true);
+                schemes.addClass('hidden');
+            }
+
+            function showPercent(percent) {
+                percent.removeClass('hidden');
+            }
+
+            function hidePercent(percent) {
+                percent.find('option:eq(0)').attr('selected', true);
+                percent.addClass('hidden');
+            }
+        });
+    })(jQuery);
+</script>

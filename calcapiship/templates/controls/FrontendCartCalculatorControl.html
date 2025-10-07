@@ -1,0 +1,164 @@
+<div id="{$params.id}"></div>
+<style>
+    #{$params.id} {
+        height: 0;
+        width: 0;
+    }
+</style>
+<script>
+    'use strict';
+    (function ($) {
+        $(document).ready(function () {
+            function ShippingCalcapishipCalculator() {
+                this.isLoading = false;
+                this.shippingRates = $('#wa-step-shipping-section').find('.js-variant-field');
+                this.shippingDetails = $('#wa-step-details-section').find('input[type="hidden"][name^="details[custom]"]');
+                this.address = '';
+                this.rates = [];
+                this.load = function () {
+                    let that = this;
+                    if (!that.isLoading) {
+                        that.isLoading = true;
+                        $.ajax({
+                            url: '{$url}',
+                            dataType: 'json',
+                            success: function (response) {
+                                that.rates = [];
+                                if (response.status == 'ok') {
+                                    that.address = response.data.address;
+                                    $.each(response.data.rates, function (rateKey, rateValue) {
+                                        let details = [];
+                                        $.each(rateValue, function (detailKey, detailValue) {
+                                            let detailTitle;
+                                            if (detailKey == 'delivery_cost') {
+                                                detailTitle = '{$p->_w("Delivery cost")}';
+                                            }
+                                            if (detailKey == 'delivery_time') {
+                                                detailTitle = '{$p->_w("Delivery time")}';
+                                            }
+                                            if (detailKey == 'delivery_type') {
+                                                detailTitle = '{$p->_w("Delivery type")}';
+                                            }
+                                            if (detailKey == 'provider') {
+                                                detailTitle = '{$p->_w("Provider")}';
+                                            }
+                                            if (detailKey == 'tariff') {
+                                                detailTitle = '{$p->_w("Tariff")}';
+                                            }
+                                            if (detailKey == 'point') {
+                                                detailTitle = '{$p->_w("Point")}';
+                                            }
+                                            if (detailKey == 'point_type') {
+                                                detailTitle = '{$p->_w("Point type")}';
+                                            }
+                                            if (detailKey == 'point_code') {
+                                                detailTitle = '{$p->_w("Point code")}';
+                                            }
+                                            if (detailKey == 'address') {
+                                                detailTitle = '{$p->_w("Address")}';
+                                            }
+                                            if (detailKey == 'phone') {
+                                                detailTitle = '{$p->_w("Phone")}';
+                                            }
+                                            if (detailKey == 'timetable') {
+                                                detailTitle = '{$p->_w("Timetable")}';
+                                            }
+                                            if (detailKey == 'description') {
+                                                detailTitle = '{$p->_w("Description")}';
+                                            }
+                                            if (detailKey == 'payment') {
+                                                detailTitle = '{$p->_w("Payment")}';
+                                                if (detailValue) {
+                                                    detailValue = '{$p->_w("Is presented")}';
+                                                } else {
+                                                    detailValue = '{$p->_w("Is absent")}';
+                                                }
+                                            }
+                                            if (detailKey == 'payment_card') {
+                                                detailTitle = '{$p->_w("Payment card")}';
+                                                if (detailValue) {
+                                                    detailValue = '{$p->_w("Is presented")}';
+                                                } else {
+                                                    detailValue = '{$p->_w("Is absent")}';
+                                                }
+                                            }
+                                            if (detailKey == 'fitting_room') {
+                                                detailTitle = '{$p->_w("Fitting room")}';
+                                                if (detailValue) {
+                                                    detailValue = '{$p->_w("Is presented")}';
+                                                } else {
+                                                    detailValue = '{$p->_w("Is absent")}';
+                                                }
+                                            }
+                                            details.push({
+                                                key: detailKey,
+                                                title: detailTitle,
+                                                value: detailValue
+                                            });
+                                        });
+                                        that.rates.push({
+                                            id: rateKey,
+                                            details: details
+                                        });
+                                    });
+                                }
+                            },
+                            complete: function () {
+                                that.isLoading = false;
+                                that.shippingRates = $('#wa-step-shipping-section').find('.js-variant-field');
+                                that.hideRates();
+                                if (that.rates.length) {
+                                    that.shippingRates.on('change', function (e) {
+                                        that.showRates();
+                                    });
+                                    that.showRates();
+                                }
+                            },
+                        });
+                    }
+                };
+                this.hideRates = function () {
+                    let that = this,
+                        fields = [
+                            'delivery_cost',
+                            'delivery_time',
+                            'delivery_type',
+                            'provider',
+                            'tariff',
+                            'address',
+                            'timetable',
+                            'description'
+                        ];
+                    that.shippingDetails.val('');
+                    that.shippingDetails.next('div').remove();
+                    $.each(fields, function (index, field) {
+                        let detail = $('#wa-step-details-section').find('input[type="hidden"][name^="details[custom][' + field + ']"]');
+                        detail.parents('.wa-line').hide();
+                    });
+                };
+                this.showRates = function () {
+                    let that = this;
+                    that.hideRates();
+                    if (that.shippingRates.val()) {
+                        $.each(that.rates, function (rateIndex, rate) {
+                            if (that.shippingRates.val().replace('{$key}' + '.', '') == rate.id) {
+                                $.each(rate.details, function (detailIndex, detail) {
+                                    if (detail.value) {
+                                        let shippingDetail = $('#wa-step-details-section').find('input[type="hidden"][name="details[custom][' + detail.key + ']"]');
+                                        shippingDetail.val(detail.value);
+                                        shippingDetail.after('<div>' + detail.value + '</div>');
+                                    }
+                                });
+                                return false;
+                            }
+                        });
+                    }
+                };
+                this.load();
+                return this;
+            }
+
+            new ShippingCalcapishipCalculator();
+        });
+    })(jQuery);
+</script>

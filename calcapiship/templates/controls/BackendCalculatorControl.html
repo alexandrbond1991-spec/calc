@@ -1,0 +1,1073 @@
+<div id="{$params.id}">
+    <div id="calcapiship_rates">
+        <div id="calcapiship_details"></div>
+    </div>
+    <div id="calcapiship_points">
+        <div id="calcapiship_map"></div>
+    </div>
+</div>
+<style>
+    #calcapiship_rates {
+        float: right;
+        width: 250px;
+    }
+
+    #calcapiship_details {
+        padding-left: 15px;
+    }
+
+    #calcapiship_points {
+        margin-right: 250px;
+    }
+
+    #calcapiship_map {
+        height: 0px;
+        width: 0px;
+    }
+
+    ymaps img {
+        display: block !important;
+    }
+
+    .calcapiship_balloon {
+        font-size: 14px;
+        line-height: normal;
+    }
+
+    .calcapiship_balloon .calcapiship_balloon_header {
+        border-bottom: 1px solid grey;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+
+    .calcapiship_balloon .calcapiship_balloon_content {
+        border-bottom: 1px dashed grey;
+    }
+
+    .calcapiship_balloon .calcapiship_balloon_content label {
+        color: grey;
+        display: block;
+        font-size: 13px !important;
+        font-weight: normal !important;
+        line-height: normal;
+    }
+
+    .calcapiship_balloon .calcapiship_balloon_content_icon {
+        margin: auto;
+        width: 25%;
+    }
+
+    .calcapiship_balloon .calcapiship_balloon_content_address,
+    .calcapiship_balloon .calcapiship_balloon_content_phone {
+        font-size: 16px;
+    }
+
+    .calcapiship_balloon .calcapiship_balloon_content_cost {
+        float: left;
+        width: 50%;
+    }
+
+    .calcapiship_balloon .calcapiship_balloon_content_time {
+        float: right;
+        width: 50%;
+    }
+
+    .calcapiship_balloon .calcapiship_balloon_content_payment,
+    .calcapiship_balloon .calcapiship_balloon_content_payment_card,
+    .calcapiship_balloon .calcapiship_balloon_content_fitting_room {
+        width: 33%;
+    }
+
+    .calcapiship_balloon .calcapiship_balloon_content_payment,
+    .calcapiship_balloon .calcapiship_balloon_content_payment_card {
+        border-right: 1px solid grey;
+        float: left;
+    }
+
+    .calcapiship_balloon .calcapiship_balloon_content_fitting_room {
+        float: right;
+    }
+
+    .calcapiship_balloon .calcapiship_balloon_content_separator {
+        clear: both;
+        margin-bottom: 10px;
+    }
+
+    .calcapiship_balloon .calcapiship_balloon_content .calcapiship_balloon_content_icon img,
+    .calcapiship_balloon .calcapiship_balloon_content .calcapiship_balloon_content_payment img,
+    .calcapiship_balloon .calcapiship_balloon_content .calcapiship_balloon_content_payment_card img,
+    .calcapiship_balloon .calcapiship_balloon_content .calcapiship_balloon_content_fitting_room img {
+        display: block;
+    }
+
+    .calcapiship_balloon .calcapiship_balloon_content .calcapiship_balloon_content_payment img,
+    .calcapiship_balloon .calcapiship_balloon_content .calcapiship_balloon_content_payment_card img,
+    .calcapiship_balloon .calcapiship_balloon_content .calcapiship_balloon_content_fitting_room img {
+        margin: auto;
+        width: 25%;
+    }
+
+    .calcapiship_balloon .calcapiship_balloon_footer {
+        color: grey;
+        font-size: 13px;
+        margin-top: 10px;
+    }
+
+    .calcapiship_balloon .calcapiship_balloon_footer span {
+        color: black;
+    }
+
+    .calcapiship_filter {
+        font-size: 14px;
+        line-height: normal;
+        padding: 10px;
+    }
+
+    .calcapiship_filter .calcapiship_filter_header {
+        border-bottom: 1px solid grey;
+        font-size: 16px;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+
+    .calcapiship_filter .calcapiship_filter_providers {
+        margin: 0 auto;
+        width: 200px;
+    }
+
+    .calcapiship_filter .calcapiship_filter_providers_wrapper {
+        float: left;
+        width: 100%;
+    }
+
+    .calcapiship_filter .calcapiship_filter_providers_content {
+        color: grey;
+        font-size: 13px;
+        margin: 0 50px 0 25px;
+    }
+
+    .calcapiship_filter .calcapiship_filter_providers_content label {
+        color: black;
+        float: left;
+        font-size: 13px !important;
+        font-weight: bold !important;
+        line-height: normal;
+    }
+
+    .calcapiship_filter .calcapiship_filter_providers_content .calcapiship_filter_providers_cost,
+    .calcapiship_filter .calcapiship_filter_providers_content .calcapiship_filter_providers_time {
+        clear: both;
+    }
+
+    .calcapiship_filter .calcapiship_filter_providers_content .calcapiship_filter_providers_cost span,
+    .calcapiship_filter .calcapiship_filter_providers_content .calcapiship_filter_providers_time span {
+        color: black;
+    }
+
+    .calcapiship_filter .calcapiship_filter_providers_field {
+        float: left;
+        margin-left: -200px;
+        width: 25px;
+    }
+
+    .calcapiship_filter .calcapiship_filter_providers_icon {
+        float: left;
+        margin-left: -50px;
+        width: 50px;
+    }
+
+    .calcapiship_filter .calcapiship_filter_providers_icon img {
+        display: block !important;
+    }
+
+    .calcapiship_filter .calcapiship_filter_providers_separator {
+        border-bottom: 1px dashed grey;
+        clear: both;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+
+    .calcapiship_filter .calcapiship_filter_point_types {
+        margin: 0 auto;
+        width: 200px;
+    }
+
+    .calcapiship_filter .calcapiship_filter_point_types_content {
+        color: grey;
+        float: right;
+        font-size: 13px;
+        width: 175px;
+    }
+
+    .calcapiship_filter .calcapiship_filter_point_types_content label {
+        color: black;
+        float: left;
+        font-size: 13px !important;
+        font-weight: bold !important;
+        line-height: normal;
+    }
+
+    .calcapiship_filter .calcapiship_filter_point_types_field {
+        float: left;
+        width: 25px;
+    }
+
+    .calcapiship_filter .calcapiship_filter_point_types_separator {
+        border-bottom: 1px dashed grey;
+        clear: both;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+
+    .calcapiship_filter .calcapiship_filter_payment_card {
+        float: left;
+        margin: 10px auto;
+        width: 100px;
+    }
+
+    .calcapiship_filter .calcapiship_filter_payment_card_wrapper {
+        float: left;
+        width: 100%;
+    }
+
+    .calcapiship_filter .calcapiship_filter_payment_card_content {
+        color: grey;
+        margin-left: 50px
+    }
+
+    .calcapiship_filter .calcapiship_filter_payment_card_field {
+        float: left;
+        margin-left: -100px;
+        width: 25px;
+    }
+
+    .calcapiship_filter .calcapiship_filter_payment_card_icon {
+        float: left;
+        margin-left: -75px;
+        width: 25px;
+    }
+
+    .calcapiship_filter .calcapiship_filter_payment_card_icon img {
+        display: block !important;
+    }
+
+    .calcapiship_filter .calcapiship_filter_payment_card_separator {
+        clear: both;
+    }
+
+    .calcapiship_filter .calcapiship_filter_fitting_room {
+        float: right;
+        margin: 10px auto;
+        width: 100px;
+    }
+
+    .calcapiship_filter .calcapiship_filter_fitting_room_wrapper {
+        float: left;
+        width: 100%;
+    }
+
+    .calcapiship_filter .calcapiship_filter_fitting_room_content {
+        color: grey;
+        margin-left: 50px
+    }
+
+    .calcapiship_filter .calcapiship_filter_fitting_room_field {
+        float: left;
+        margin-left: -100px;
+        width: 25px;
+    }
+
+    .calcapiship_filter .calcapiship_filter_fitting_room_icon {
+        float: left;
+        margin-left: -75px;
+        width: 25px;
+    }
+
+    .calcapiship_filter .calcapiship_filter_fitting_room_icon img {
+        display: block !important;
+    }
+
+    .calcapiship_filter .calcapiship_filter_fitting_room_separator {
+        clear: both;
+    }
+
+    .calcapiship_filter ul.calcapiship_filter_points {
+        font-size: 12px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .calcapiship_filter ul.calcapiship_filter_points li {
+        margin-bottom: 10px;
+    }
+
+    .calcapiship_filter ul.calcapiship_filter_points li a {
+        color: grey;
+    }
+
+    .calcapiship_filter ul.calcapiship_filter_points li a:hover,
+    .calcapiship_filter ul.calcapiship_filter_points li.current a {
+        color: black;
+    }
+</style>
+<script>
+    'use strict';
+    (function ($) {
+        $(document).ready(function () {
+            function ShippingCalcapishipCalculator() {
+                this.isLoading = false;
+                this.shippingRates = $('select#shipping_methods');
+                this.shippingDetails = $('input[type="hidden"][name^="shipping_' + '{$key}' + '"]');
+                this.address = '';
+                this.rates = [];
+                this.points = {
+                    type: 'FeatureCollection',
+                    features: []
+                };
+                this.sortedPoints = [];
+                this.map;
+                this.objectManager;
+                this.align = function () {
+                    let that = this;
+                    $('#shipping-custom-' + '{$key}').css('width', '100%');
+                    $('#' + '{$params.id}').appendTo('#shipping-custom-' + '{$key}');
+                };
+                this.load = function () {
+                    let that = this,
+                        features = [];
+                    if (!that.isLoading) {
+                        that.isLoading = true;
+                        $.ajax({
+                            url: '{$url}',
+                            dataType: 'json',
+                            success: function (response) {
+                                that.rates = [];
+                                that.points.features = [];
+                                if (response.status == 'ok') {
+                                    that.address = response.data.address;
+                                    $.each(response.data.rates, function (rateKey, rateValue) {
+                                        let details = [];
+                                        $.each(rateValue, function (detailKey, detailValue) {
+                                            let detailTitle;
+                                            if (detailKey == 'delivery_cost') {
+                                                detailTitle = '{$p->_w("Delivery cost")}';
+                                            }
+                                            if (detailKey == 'delivery_time') {
+                                                detailTitle = '{$p->_w("Delivery time")}';
+                                            }
+                                            if (detailKey == 'delivery_type') {
+                                                detailTitle = '{$p->_w("Delivery type")}';
+                                            }
+                                            if (detailKey == 'provider') {
+                                                detailTitle = '{$p->_w("Provider")}';
+                                            }
+                                            if (detailKey == 'tariff') {
+                                                detailTitle = '{$p->_w("Tariff")}';
+                                            }
+                                            if (detailKey == 'point') {
+                                                detailTitle = '{$p->_w("Point")}';
+                                            }
+                                            if (detailKey == 'point_type') {
+                                                detailTitle = '{$p->_w("Point type")}';
+                                            }
+                                            if (detailKey == 'point_code') {
+                                                detailTitle = '{$p->_w("Point code")}';
+                                            }
+                                            if (detailKey == 'address') {
+                                                detailTitle = '{$p->_w("Address")}';
+                                            }
+                                            if (detailKey == 'phone') {
+                                                detailTitle = '{$p->_w("Phone")}';
+                                            }
+                                            if (detailKey == 'timetable') {
+                                                detailTitle = '{$p->_w("Timetable")}';
+                                            }
+                                            if (detailKey == 'description') {
+                                                detailTitle = '{$p->_w("Description")}';
+                                            }
+                                            if (detailKey == 'payment') {
+                                                detailTitle = '{$p->_w("Payment")}';
+                                                if (detailValue) {
+                                                    detailValue = '{$p->_w("Is presented")}';
+                                                } else {
+                                                    detailValue = '{$p->_w("Is absent")}';
+                                                }
+                                            }
+                                            if (detailKey == 'payment_card') {
+                                                detailTitle = '{$p->_w("Payment card")}';
+                                                if (detailValue) {
+                                                    detailValue = '{$p->_w("Is presented")}';
+                                                } else {
+                                                    detailValue = '{$p->_w("Is absent")}';
+                                                }
+                                            }
+                                            if (detailKey == 'fitting_room') {
+                                                detailTitle = '{$p->_w("Fitting room")}';
+                                                if (detailValue) {
+                                                    detailValue = '{$p->_w("Is presented")}';
+                                                } else {
+                                                    detailValue = '{$p->_w("Is absent")}';
+                                                }
+                                            }
+                                            details.push({
+                                                key: detailKey,
+                                                title: detailTitle,
+                                                value: detailValue
+                                            });
+                                        });
+                                        that.rates.push({
+                                            id: rateKey,
+                                            details: details
+                                        });
+                                        if (rateKey.indexOf('point') != -1) {
+                                            let iconContent = '',
+                                                iconColor = '#1e98ff',
+                                                payment = '<img src="' + '{$wa_url}' + 'wa-plugins/shipping/calcapiship/img/payment_failure.svg' + '" alt="' + '{$p->_w("Point does not accept any payments")}' + '" title="' + '{$p->_w("Point does not accept any payments")}' + '" height="25" width="25">',
+                                                paymentCard = '<img src="' + '{$wa_url}' + 'wa-plugins/shipping/calcapiship/img/payment_card_failure.svg' + '" alt="' + '{$p->_w("Payment card is absent")}' + '" title="' + '{$p->_w("Payment card is absent")}' + '" height="25" width="25">',
+                                                fittingRoom = '<img src="' + '{$wa_url}' + 'wa-plugins/shipping/calcapiship/img/fitting_room_failure.svg' + '" alt="' + '{$p->_w("Fitting room is absent")}' + '" title="' + '{$p->_w("Fitting room is absent")}' + '" height="25" width="25">';
+                                            $.each($.parseJSON('{$providers}'), function (index, provider) {
+                                                if (rateValue.provider_key == provider.key) {
+                                                    if (provider.icon) {
+                                                        iconContent = '<img src="' + provider.icon + '" alt="' + provider.name + '" title="' + provider.name + '" height="16" width="16">';
+                                                    }
+                                                    iconColor = provider.color;
+                                                }
+                                            });
+                                            if (rateValue.payment) {
+                                                payment = '<img src="' + '{$wa_url}' + 'wa-plugins/shipping/calcapiship/img/payment_success.svg' + '" alt="' + '{$p->_w("Payment is presented")}' + '" title="' + '{$p->_w("Payment is presented")}' + '" height="25" width="25">';
+                                            }
+                                            if (rateValue.payment_card) {
+                                                paymentCard = '<img src="' + '{$wa_url}' + 'wa-plugins/shipping/calcapiship/img/payment_card_success.svg' + '" alt="' + '{$p->_w("Payment card is presented")}' + '" title="' + '{$p->_w("Payment card is presented")}' + '" height="25" width="25">';
+                                            }
+                                            if (rateValue.fitting_room) {
+                                                fittingRoom = '<img src="' + '{$wa_url}' + 'wa-plugins/shipping/calcapiship/img/fitting_room_success.svg' + '" alt="' + '{$p->_w("Fitting room is presented")}' + '" title="' + '{$p->_w("Fitting room is presented")}' + '" height="25" width="25">';
+                                            }
+                                            that.points.features.push({
+                                                type: 'Feature',
+                                                id: rateKey,
+                                                geometry: {
+                                                    type: 'Point',
+                                                    coordinates: [
+                                                        rateValue.lat,
+                                                        rateValue.lng
+                                                    ]
+                                                },
+                                                properties: {
+                                                    iconContent: iconContent,
+                                                    balloonContentHeader: '<div class="calcapiship_balloon_header_point">' + rateValue.point + '</div>',
+                                                    balloonContent: [
+                                                        '<div class="calcapiship_balloon_content_icon">' + iconContent.replace(/16/g, '100') + '</div>',
+                                                        '<div class="calcapiship_balloon_content_separator"></div>',
+                                                        '<div class="calcapiship_balloon_content_button"><input type="button" value="' + '{$p->_w("Select")}' + '"></div>',
+                                                        '<div class="calcapiship_balloon_content_separator"></div>',
+                                                        '<div class="calcapiship_balloon_content_address">' + rateValue.address + '</div>',
+                                                        '<div class="calcapiship_balloon_content_phone">' + rateValue.phone + '</div>',
+                                                        '<div class="calcapiship_balloon_content_separator"></div>',
+                                                        '<div class="calcapiship_balloon_content_cost"><label>' + '{$p->_w("Delivery cost")}' + ':</label>' + rateValue.delivery_cost + '</div>',
+                                                        '<div class="calcapiship_balloon_content_time"><label>' + '{$p->_w("Delivery time")}' + ':</label>' + rateValue.delivery_time + '</div>',
+                                                        '<div class="calcapiship_balloon_content_separator"></div>',
+                                                        '<div class="calcapiship_balloon_content_payment">' + payment + '</div>',
+                                                        '<div class="calcapiship_balloon_content_payment_card">' + paymentCard + '</div>',
+                                                        '<div class="calcapiship_balloon_content_fitting_room">' + fittingRoom + '</div>',
+                                                        '<div class="calcapiship_balloon_content_separator"></div>',
+                                                        (rateValue.timetable) ? '<div class="calcapiship_balloon_content_timetable"><label>' + '{$p->_w("Timetable")}' + ':</label>' + rateValue.timetable + '</div><div class="calcapiship_balloon_content_separator"></div>' : '',
+                                                        (rateValue.description) ? '<div class="calcapiship_balloon_content_description"><label>' + '{$p->_w("Description")}' + ':</label>' + rateValue.description + '</div><div class="calcapiship_balloon_content_separator"></div>' : ''
+                                                    ].join(''),
+                                                    balloonContentFooter: [
+                                                        '<div class="calcapiship_balloon_footer_point_type">' + '{$p->_w("Point type")}' + ': <span>' + rateValue.point_type + '</span></div>',
+                                                        '<div class="calcapiship_balloon_footer_point_code">' + '{$p->_w("Point code")}' + ': <span>' + rateValue.point_code + '</span></div>',
+                                                        '<div class="calcapiship_balloon_footer_provider">' + '{$p->_w("Provider")}' + ': <span>' + rateValue.provider + '</span></div>',
+                                                        '<div class="calcapiship_balloon_footer_tariff">' + '{$p->_w("Tariff")}' + ': <span>' + rateValue.tariff + '</span></div><br>',
+                                                    ].join(''),
+                                                    providerFilter: rateValue.provider_key,
+                                                    pointTypeFilter: rateValue.type,
+                                                    paymentCardFilter: rateValue.payment_card,
+                                                    fittingRoomFilter: rateValue.fitting_room,
+                                                    cost: rateValue.cost,
+                                                    time: rateValue.time,
+                                                    delivery_cost: rateValue.delivery_cost,
+                                                    delivery_time: rateValue.delivery_time,
+                                                    address: rateValue.address,
+                                                    id: rateKey
+                                                },
+                                                options: {
+                                                    iconColor: iconColor,
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            },
+                            complete: function () {
+                                that.isLoading = false;
+                                that.shippingRates = $('select#shipping_methods');
+                                that.hideRates();
+                                if (that.rates.length) {
+                                    that.shippingRates.on('change', function (e) {
+                                        that.showRates();
+                                    });
+                                    that.showRates();
+                                }
+                                that.hidePoints();
+                                if (that.points.features.length) {
+                                    that.showPoints();
+                                }
+                                if (!that.shippingRates.val()) {
+                                    that.shippingRates.val(that.shippingRates.find('option:eq(0)').val()).change();
+                                }
+                            },
+                        });
+                    }
+                };
+                this.hideRates = function () {
+                    let that = this;
+                    that.shippingDetails.val('');
+                    $('#calcapiship_details').html('');
+                };
+                this.showRates = function () {
+                    let that = this,
+                        fields = [
+                            'delivery_cost',
+                            'delivery_time'
+                        ];
+                    that.hideRates();
+                    if (that.shippingRates.val()) {
+                        $.each(that.rates, function (rateIndex, rate) {
+                            if (that.shippingRates.val().replace('{$key}' + '.', '') == rate.id) {
+                                $.each(rate.details, function (detailIndex, detail) {
+                                    if (
+                                        detail.title &&
+                                        detail.value
+                                    ) {
+                                        let shippingDetail = $('input[type="hidden"][name="shipping_' + '{$key}' + '[' + detail.key + ']"]'),
+                                            fieldIndex = fields.indexOf(detail.key);
+                                        shippingDetail.val(detail.value);
+                                        if (fieldIndex == -1) {
+                                            $('#calcapiship_details').append('<b>' + detail.title + '</b>: ' + detail.value + '<br><br>');
+                                        }
+                                    }
+                                });
+                                return false;
+                            }
+                        });
+                    }
+                };
+                this.hidePoints = function () {
+                    let that = this;
+                    that.map = null;
+                    that.objectManager = null;
+                    $('#calcapiship_map').html('');
+                    $('#calcapiship_map').css('width', 0);
+                    $('#calcapiship_map').css('height', 0);
+                };
+                this.showPoints = function () {
+                    let that = this,
+                        url = 'https://api-maps.yandex.ru/2.1/?',
+                        params = [
+                            'ns=shippingCalcapishipCalculatorMap',
+                            'lang=' + '{$wa->locale()}'
+                        ];
+                    if (typeof (shippingCalcapishipCalculatorMap) === 'undefined') {
+                        if ('{$api_key}' != '') {
+                            params.push('apikey={$api_key}');
+                        }
+                        url += params.join('&');
+                        $.getScript(url, function (script, textStatus, jqXHR) {
+                            shippingCalcapishipCalculatorMap.ready(function () {
+                                that.initPoints();
+                            });
+                        });
+                    } else {
+                        shippingCalcapishipCalculatorMap.ready(function () {
+                            that.initPoints();
+                        });
+                    }
+                };
+                this.initPoints = function () {
+                    let that = this,
+                        sortedPoints = [],
+                        addressGeoQueryResult,
+                        sortedPointsGeoQueryResult,
+                        providersFilterLayoutContent = '<div class="calcapiship_filter_header">' + '{$p->_w("Providers")}' + '</div>',
+                        pointTypesFilterLayoutContent = '<div class="calcapiship_filter_header">' + '{$p->_w("Point types")}' + '</div>',
+                        paymentCardFilterLayoutContent = '',
+                        fittingRoomFilterLayoutContent = '',
+                        pointsFilterLayoutContent = '<div class="calcapiship_filter_header">' + '{$p->_w("Point")}' + '</div>';
+                    $.each($.parseJSON('{$providers}'), function (index, provider) {
+                        let icon = '';
+                        if (provider.icon) {
+                            icon = '<img src="' + provider.icon + '" alt="' + provider.name + '" title="' + provider.name + '" height="50" width="50">';
+                        }
+                        providersFilterLayoutContent += '<div class="calcapiship_filter_providers">';
+                        providersFilterLayoutContent += '<div class="calcapiship_filter_providers_wrapper">';
+                        providersFilterLayoutContent += '<div class="calcapiship_filter_providers_content">';
+                        providersFilterLayoutContent += '<label for="' + '{$key}' + '.calcapiship_filter_providers_' + provider.key + '">' + provider.name + '</label>';
+                        providersFilterLayoutContent += '<div class="calcapiship_filter_providers_total">&nbsp;(<span>0</span>)</div>';
+                        providersFilterLayoutContent += '<div class="calcapiship_filter_providers_cost">' + '{$p->_w("cost from")}' + ' <span>0</span></div>';
+                        providersFilterLayoutContent += '<div class="calcapiship_filter_providers_time">' + '{$p->_w("time from")}' + ' <span>0</span></div>';
+                        providersFilterLayoutContent += '</div>';
+                        providersFilterLayoutContent += '</div>';
+                        providersFilterLayoutContent += '<div class="calcapiship_filter_providers_field">';
+                        providersFilterLayoutContent += '<input type="checkbox" name="providers[' + provider.key + ']" value="' + provider.key + '" checked="1" id="' + '{$key}' + '.calcapiship_filter_providers_' + provider.key + '" title="' + provider.name + '">';
+                        providersFilterLayoutContent += '</div>';
+                        providersFilterLayoutContent += '<div class="calcapiship_filter_providers_icon">';
+                        providersFilterLayoutContent += icon;
+                        providersFilterLayoutContent += '</div>';
+                        providersFilterLayoutContent += '<div class="calcapiship_filter_providers_separator" style="border-bottom-color: ' + provider.color + ';"></div>';
+                        providersFilterLayoutContent += '</div>';
+                    });
+                    $.each($.parseJSON('{$point_types}'), function (index, pointType) {
+                        let key = Object.keys(pointType)[0];
+                        pointTypesFilterLayoutContent += '<div class="calcapiship_filter_point_types">';
+                        pointTypesFilterLayoutContent += '<div class="calcapiship_filter_point_types_content">';
+                        pointTypesFilterLayoutContent += '<label for="' + '{$key}' + '.calcapiship_filter_point_types_' + key + '">' + pointType[key] + '</label>';
+                        pointTypesFilterLayoutContent += '<div class="calcapiship_filter_point_types_total">&nbsp;(<span>0</span>)</div>';
+                        pointTypesFilterLayoutContent += '</div>';
+                        pointTypesFilterLayoutContent += '<div class="calcapiship_filter_point_types_field">';
+                        pointTypesFilterLayoutContent += '<input type="checkbox" name="point_types[' + key + ']" value="' + key + '" checked="1" id="' + '{$key}' + '.calcapiship_filter_point_types_' + key + '" title="' + pointType[key] + '">';
+                        pointTypesFilterLayoutContent += '</div>';
+                        pointTypesFilterLayoutContent += '<div class="calcapiship_filter_point_types_separator"></div>';
+                        pointTypesFilterLayoutContent += '</div>';
+                    });
+                    paymentCardFilterLayoutContent += '<div class="calcapiship_filter_payment_card">';
+                    paymentCardFilterLayoutContent += '<div class="calcapiship_filter_payment_card_wrapper">';
+                    paymentCardFilterLayoutContent += '<div class="calcapiship_filter_payment_card_content">';
+                    paymentCardFilterLayoutContent += '<div class="calcapiship_filter_payment_card_total">&nbsp;(<span>0</span>)</div>';
+                    paymentCardFilterLayoutContent += '</div>';
+                    paymentCardFilterLayoutContent += '</div>';
+                    paymentCardFilterLayoutContent += '<div class="calcapiship_filter_payment_card_field">';
+                    paymentCardFilterLayoutContent += '<input type="checkbox" name="payment_card" value="1" id="' + '{$key}' + '.calcapiship_filter_payment_card" title="' + '{$p->_w("Payment card is presented")}' + '">';
+                    paymentCardFilterLayoutContent += '</div>';
+                    paymentCardFilterLayoutContent += '<div class="calcapiship_filter_payment_card_icon">';
+                    paymentCardFilterLayoutContent += '<label for="' + '{$key}' + '.calcapiship_filter_payment_card">';
+                    paymentCardFilterLayoutContent += '<img src="' + '{$wa_url}' + 'wa-plugins/shipping/calcapiship/img/payment_card_success.svg" alt="' + '{$p->_w("Payment card is presented")}' + '" title="' + '{$p->_w("Payment card is presented")}' + '" height="25" width="25">';
+                    paymentCardFilterLayoutContent += '</label>';
+                    paymentCardFilterLayoutContent += '</div>';
+                    paymentCardFilterLayoutContent += '<div class="calcapiship_filter_payment_card_separator"></div>';
+                    paymentCardFilterLayoutContent += '</div>';
+                    fittingRoomFilterLayoutContent += '<div class="calcapiship_filter_fitting_room">';
+                    fittingRoomFilterLayoutContent += '<div class="calcapiship_filter_fitting_room_wrapper">';
+                    fittingRoomFilterLayoutContent += '<div class="calcapiship_filter_fitting_room_content">';
+                    fittingRoomFilterLayoutContent += '<div class="calcapiship_filter_fitting_room_total">&nbsp;(<span>0</span>)</div>';
+                    fittingRoomFilterLayoutContent += '</div>';
+                    fittingRoomFilterLayoutContent += '</div>';
+                    fittingRoomFilterLayoutContent += '<div class="calcapiship_filter_fitting_room_field">';
+                    fittingRoomFilterLayoutContent += '<input type="checkbox" name="fitting_room" value="1" id="' + '{$key}' + '.calcapiship_filter_fitting_room" title="' + '{$p->_w("Fitting room is presented")}' + '">';
+                    fittingRoomFilterLayoutContent += '</div>';
+                    fittingRoomFilterLayoutContent += '<div class="calcapiship_filter_fitting_room_icon">';
+                    fittingRoomFilterLayoutContent += '<label for="' + '{$key}' + '.calcapiship_filter_fitting_room">';
+                    fittingRoomFilterLayoutContent += '<img src="' + '{$wa_url}' + 'wa-plugins/shipping/calcapiship/img/fitting_room_success.svg" alt="' + '{$p->_w("Fitting room is presented")}' + '" title="' + '{$p->_w("Fitting room is presented")}' + '" height="25" width="25">';
+                    fittingRoomFilterLayoutContent += '</label>';
+                    fittingRoomFilterLayoutContent += '</div>';
+                    fittingRoomFilterLayoutContent += '<div class="calcapiship_filter_fitting_room_separator"></div>';
+                    fittingRoomFilterLayoutContent += '</div>';
+                    pointsFilterLayoutContent += '<ul class="calcapiship_filter_points"></ul>';
+                    let searchControl = new shippingCalcapishipCalculatorMap.control.SearchControl({
+                            options: {
+                                float: 'right'
+                            }
+                        }),
+                        searchResults = new shippingCalcapishipCalculatorMap.GeoObjectCollection(null, {
+                            hintContentLayout: shippingCalcapishipCalculatorMap.templateLayoutFactory.createClass('$[properties.name]'),
+                            zIndex: 1500,
+                            preset: 'islands#redCircleDotIcon'
+                        }),
+                        balloonContentLayout = shippingCalcapishipCalculatorMap.templateLayoutFactory.createClass(
+                            '<div class="calcapiship_balloon">' +
+                            '<div class="calcapiship_balloon_header">$[properties.balloonContentHeader]</div>' +
+                            '<div class="calcapiship_balloon_content">$[properties.balloonContent]</div>' +
+                            '<div class="calcapiship_balloon_footer">$[properties.balloonContentFooter]</div>' +
+                            '</div>', {
+                                build: function () {
+                                    this.constructor.superclass.build.call(this);
+                                    let button = $('input[type="button"]', this.getParentElement()),
+                                        selected = that.shippingRates.val(),
+                                        current;
+                                    if (this.getData().geoObject) {
+                                        current = '{$key}' + '.' + this.getData().geoObject.id;
+                                    }
+                                    if (this.getData().object) {
+                                        current = '{$key}' + '.' + this.getData().object.id;
+                                    }
+                                    if (current) {
+                                        button.bind('click', function () {
+                                            that.shippingRates.val(current).change();
+                                        });
+                                        if (current == selected) {
+                                            button.hide();
+                                        }
+                                    }
+                                },
+                                clear: function () {
+                                    let button = $('input[type="button"]', this.getParentElement());
+                                    button.show();
+                                    button.unbind('click');
+                                    this.constructor.superclass.clear.call(this);
+                                }
+                            }),
+                        filterListBoxItemLayout = shippingCalcapishipCalculatorMap.templateLayoutFactory.createClass(
+                            '<div class="calcapiship_filter">$[data.content]</div>', {
+                                build: function () {
+                                    this.constructor.superclass.build.call(this);
+                                    this.providers = [];
+                                    this.pointTypes = [];
+                                    this.paymentCard = [];
+                                    this.fittingRoom = [];
+                                    let self = this,
+                                        providers = $('input[type="checkbox"][name^="providers"]', this.getParentElement()),
+                                        pointTypes = $('input[type="checkbox"][name^="point_types"]', this.getParentElement()),
+                                        paymentCard = $('input[type="checkbox"][name="payment_card"]', this.getParentElement()),
+                                        fittingRoom = $('input[type="checkbox"][name="fitting_room"]', this.getParentElement());
+                                    $.each(providers, function (index, provider) {
+                                        if ($(this).is(':checked')) {
+                                            self.providers.push('properties.providerFilter == "' + $(this).val() + '"');
+                                        }
+                                    });
+                                    $.each(pointTypes, function (index, pointType) {
+                                        if ($(this).is(':checked')) {
+                                            self.pointTypes.push('properties.pointTypeFilter == "' + $(this).val() + '"');
+                                        }
+                                    });
+                                    if (paymentCard.is(':checked')) {
+                                        self.paymentCard.push('properties.paymentCardFilter == "' + $(this).val() + '"');
+                                    }
+                                    if (fittingRoom.is(':checked')) {
+                                        self.fittingRoom.push('properties.fittingRoomFilter == "' + $(this).val() + '"');
+                                    }
+                                    this.filter();
+                                    providers.on('change', function (e) {
+                                        let filter = [];
+                                        $.each(providers, function (index, provider) {
+                                            if ($(this).is(':checked')) {
+                                                filter.push('properties.providerFilter == "' + $(this).val() + '"');
+                                            }
+                                        });
+                                        self.providers = filter;
+                                        self.filter();
+                                    });
+                                    pointTypes.on('change', function (e) {
+                                        let filter = [];
+                                        $.each(pointTypes, function (index, pointType) {
+                                            if ($(this).is(':checked')) {
+                                                filter.push('properties.pointTypeFilter == "' + $(this).val() + '"');
+                                            }
+                                        });
+                                        self.pointTypes = filter;
+                                        self.filter();
+                                    });
+                                    paymentCard.on('change', function (e) {
+                                        let filter = [];
+                                        if ($(this).is(':checked')) {
+                                            filter.push('properties.paymentCardFilter == "' + $(this).val() + '"');
+                                        }
+                                        self.paymentCard = filter;
+                                        self.filter();
+                                    });
+                                    fittingRoom.on('change', function (e) {
+                                        let filter = [];
+                                        if ($(this).is(':checked')) {
+                                            filter.push('properties.fittingRoomFilter == "' + $(this).val() + '"');
+                                        }
+                                        self.fittingRoom = filter;
+                                        self.filter();
+                                    });
+                                },
+                                clear: function () {
+                                    this.providers = null;
+                                    this.pointTypes = null;
+                                    this.paymentCard = null;
+                                    this.fittingRoom = null;
+                                    this.constructor.superclass.clear.call(this);
+                                },
+                                filter: function () {
+                                    let self = this,
+                                        filter = [],
+                                        points = [],
+                                        providers = [],
+                                        pointTypes = [],
+                                        paymentCard = [],
+                                        fittingRoom = [];
+                                    $.each($.parseJSON('{$providers}'), function (index, provider) {
+                                        providers.push({
+                                            key: provider.key,
+                                            total: 0,
+                                            cost: null,
+                                            time: null,
+                                            delivery_cost: null,
+                                            delivery_time: null
+                                        });
+                                    });
+                                    $.each($.parseJSON('{$point_types}'), function (index, pointType) {
+                                        let key = Object.keys(pointType)[0];
+                                        pointTypes.push({
+                                            key: key,
+                                            total: 0
+                                        });
+                                    });
+                                    paymentCard.push({
+                                        total: 0
+                                    });
+                                    fittingRoom.push({
+                                        total: 0
+                                    });
+                                    if (this.providers.length) {
+                                        filter.push('(' + this.providers.join(' || ') + ')');
+                                    } else {
+                                        filter.push('(' + 'properties.providerFilter == ""' + ')');
+                                    }
+                                    if ('{$display_point_types}') {
+                                        if (this.pointTypes.length) {
+                                            filter.push('(' + this.pointTypes.join(' || ') + ')');
+                                        } else {
+                                            filter.push('(' + 'properties.pointTypesFilter == ""' + ')');
+                                        }
+                                    }
+                                    if (this.paymentCard.length) {
+                                        filter.push('(' + this.paymentCard.join(' || ') + ')');
+                                    }
+                                    if (this.fittingRoom.length) {
+                                        filter.push('(' + this.fittingRoom.join(' || ') + ')');
+                                    }
+                                    that.objectManager.setFilter(filter.join(' && '));
+                                    that.objectManager.objects.each(function (object) {
+                                        let objectState = that.objectManager.getObjectState(object.id);
+                                        if (!objectState.isFilteredOut) {
+                                            providers.find(function (provider) {
+                                                if (provider.key == object.properties.providerFilter) {
+                                                    provider.total++;
+                                                    if (
+                                                        provider.cost == null ||
+                                                        provider.cost > object.properties.cost
+                                                    ) {
+                                                        provider.cost = object.properties.cost;
+                                                        provider.delivery_cost = object.properties.delivery_cost;
+                                                    }
+                                                    if (
+                                                        provider.time == null ||
+                                                        provider.time > object.properties.time
+                                                    ) {
+                                                        provider.time = object.properties.time;
+                                                        provider.delivery_time = object.properties.delivery_time;
+                                                    }
+                                                }
+                                            });
+                                            pointTypes.find(function (pointType) {
+                                                if (pointType.key == object.properties.pointTypeFilter) {
+                                                    pointType.total++;
+                                                }
+                                            });
+                                            paymentCard.find(function (paymentCard) {
+                                                if (object.properties.paymentCardFilter) {
+                                                    paymentCard.total++;
+                                                }
+                                            });
+                                            fittingRoom.find(function (fittingRoom) {
+                                                if (object.properties.fittingRoomFilter) {
+                                                    fittingRoom.total++;
+                                                }
+                                            });
+                                            let sortedPointIndex = that.sortedPoints.indexOf(object.id);
+                                            if (sortedPointIndex != -1) {
+                                                points[sortedPointIndex] = '<li><a href="#" data-id="' + object.id + '">' + object.properties.address + '</a></li>';
+                                            }
+                                        }
+                                    });
+                                    $.each(providers, function (index, provider) {
+                                        let providerField = $('input[type="checkbox"][name="providers[' + provider.key + ']"]', self.getParentElement()),
+                                            providerContainer = providerField.parents('.calcapiship_filter_providers');
+                                        providerContainer.find('.calcapiship_filter_providers_total span').html(provider.total);
+                                        if (provider.cost != null) {
+                                            providerContainer.find('.calcapiship_filter_providers_cost span').html(provider.delivery_cost);
+                                        } else {
+                                            providerContainer.find('.calcapiship_filter_providers_cost span').html('-');
+                                        }
+                                        if (provider.time != null) {
+                                            providerContainer.find('.calcapiship_filter_providers_time span').html(provider.time + ' ' + '{$p->_w("d.")}');
+                                        } else {
+                                            providerContainer.find('.calcapiship_filter_providers_time span').html('-');
+                                        }
+                                    });
+                                    $.each(pointTypes, function (index, pointType) {
+                                        let pointTypeField = $('input[type="checkbox"][name="point_types[' + pointType.key + ']"]', self.getParentElement()),
+                                            pointTypeContainer = pointTypeField.parents('.calcapiship_filter_point_types');
+                                        pointTypeContainer.find('.calcapiship_filter_point_types_total span').html(pointType.total);
+                                    });
+                                    let paymentCardField = $('input[type="checkbox"][name="payment_card"]', this.getParentElement()),
+                                        paymentCardContainer = paymentCardField.parents('.calcapiship_filter_payment_card');
+                                    paymentCardContainer.find('.calcapiship_filter_payment_card_total span').html(paymentCard[0].total);
+                                    let fittingRoomField = $('input[type="checkbox"][name="fitting_room"]', this.getParentElement()),
+                                        fittingRoomContainer = fittingRoomField.parents('.calcapiship_filter_fitting_room');
+                                    fittingRoomContainer.find('.calcapiship_filter_fitting_room_total span').html(fittingRoom[0].total);
+                                    let pointsContainer = $('.calcapiship_filter_points', this.getParentElement());
+                                    pointsContainer.html(points);
+                                    pointsContainer.find('a').bind('click', function (e) {
+                                        e.preventDefault();
+                                        that.openPoint($(this).data('id'));
+                                        return false;
+                                    });
+                                }
+                            }),
+                        filterListBoxItems = [
+                            new shippingCalcapishipCalculatorMap.control.ListBoxItem({
+                                data: {
+                                    content:
+                                        providersFilterLayoutContent +
+                                        ('{$display_point_types}' ? pointTypesFilterLayoutContent : '') +
+                                        paymentCardFilterLayoutContent +
+                                        fittingRoomFilterLayoutContent +
+                                        pointsFilterLayoutContent
+                                },
+                                options: {
+                                    layout: filterListBoxItemLayout,
+                                    selectOnClick: false
+                                },
+                            })
+                        ],
+                        filterListBox = new shippingCalcapishipCalculatorMap.control.ListBox({
+                            data: {
+                                content: '{$p->_w("Filter")}',
+                                image: '{$wa_url}' + 'wa-plugins/shipping/calcapiship/img/filter.svg',
+                                title: '{$p->_w("Filters points according to different options.")}'
+                            },
+                            state: {
+                                expanded: true
+                            },
+                            options: {
+                                collapseOnBlur: false,
+                            },
+                            items: filterListBoxItems
+                        });
+                    if ('{$wa->isMobile()}' != '') {
+                        filterListBox.collapse();
+                    }
+                    $('#calcapiship_map').css('max-width', $('#shipping-custom-' + '{$key}').width() + 'px');
+                    $('#calcapiship_map').css('width', '100%');
+                    $('#calcapiship_map').css('height', '500px');
+                    if (that.map) {
+                        that.map.destroy();
+                    }
+                    that.map = new shippingCalcapishipCalculatorMap.Map('calcapiship_map', {
+                        center: that.points.features[0].geometry.coordinates,
+                        zoom: 7,
+                        controls: [
+                            'fullscreenControl',
+                            'zoomControl'
+                        ]
+                    }, {
+                        autoFitToViewport: 'always',
+                        zoomControlSize: 'small',
+                        zoomControlFloat: 'none',
+                        zoomControlPosition: {
+                            top: '43px',
+                            right: '10px'
+                        },
+                        suppressMapOpenBlock: true,
+                        balloonAutoPanCheckZoomRange: true,
+                        balloonMaxHeight: 400
+                    });
+                    if ('{$wa->isMobile()}' != '') {
+                        that.map.options.set('balloonPanelMaxMapArea', Infinity);
+                        that.map.options.set('balloonPanelMaxHeightRatio', 0.8);
+                    }
+                    if (that.objectManager) {
+                        that.objectManager.removeAll();
+                    }
+                    that.objectManager = new shippingCalcapishipCalculatorMap.ObjectManager({
+                        gridSize: 32,
+                        clusterize: true,
+                        clusterIconLayout: 'default#pieChart',
+                        clusterBalloonContentLayout: 'cluster#balloonCarousel',
+                        clusterBalloonContentLayoutHeight: 400,
+                        clusterBalloonCycling: false,
+                        clusterBalloonPagerVisible: false,
+                        clusterBalloonItemContentLayout: balloonContentLayout,
+                        geoObjectBalloonContentLayout: balloonContentLayout
+                    });
+                    that.objectManager.add(that.points);
+                    that.map.geoObjects.add(that.objectManager);
+                    that.map.controls.add(searchControl);
+                    that.map.geoObjects.add(searchResults);
+                    addressGeoQueryResult = new shippingCalcapishipCalculatorMap.geoQuery(new shippingCalcapishipCalculatorMap.geocode(that.address)).slice(0, 1).then(function () {
+                        if (addressGeoQueryResult.getLength()) {
+                            addressGeoQueryResult.addToMap(that.map).setOptions({
+                                zIndex: 1500,
+                                preset: 'islands#geolocationIcon'
+                            });
+                        }
+                    }).then(function () {
+                        sortedPointsGeoQueryResult = new shippingCalcapishipCalculatorMap.geoQuery(that.points).sortByDistance(addressGeoQueryResult.get(0).geometry.getCoordinates()).then(function () {
+                            if (sortedPointsGeoQueryResult.getLength()) {
+                                sortedPoints = [];
+                                sortedPointsGeoQueryResult.each(function (object) {
+                                    sortedPoints.push(object.properties.get('id'));
+                                });
+                            }
+                            that.sortedPoints = sortedPoints;
+                            that.map.controls.add(filterListBox);
+                        });
+                    }, function () {
+                        sortedPointsGeoQueryResult = new shippingCalcapishipCalculatorMap.geoQuery(that.points).sort('properties.address').then(function () {
+                            if (sortedPointsGeoQueryResult.getLength()) {
+                                sortedPoints = [];
+                                sortedPointsGeoQueryResult.each(function (object) {
+                                    sortedPoints.push(object.properties.get('id'));
+                                });
+                            }
+                            that.sortedPoints = sortedPoints;
+                            that.map.controls.add(filterListBox);
+                        });
+                    });
+                    searchControl.events.add('resultselect', function (e) {
+                        searchControl.getResult(e.get('index')).then(function (results) {
+                            searchResults.add(results);
+                        });
+                    }).add('submit', function () {
+                        searchResults.removeAll();
+                    });
+                    if (that.shippingRates.val().indexOf('point') != -1) {
+                        that.openPoint(that.shippingRates.val().replace('{$key}' + '.', ''));
+                    }
+                    window.onresize = function (event) {
+                        that.map.container._element.style.width = '100%';
+                        that.map.container.getElement().style.width = '100%';
+                        that.map.container.fitToViewport();
+                        that.openPoint(that.shippingRates.val().replace('{$key}' + '.', ''));
+                    };
+                };
+                this.openPoint = function (id) {
+                    let that = this;
+                    if (
+                        that.map &&
+                        that.objectManager
+                    ) {
+                        that.map.setZoom(18);
+                        let objectState = that.objectManager.getObjectState(id),
+                            object = that.objectManager.objects.getById(id);
+                        that.map.setCenter(object.geometry.coordinates);
+                        that.map.panTo(object.geometry.coordinates);
+                        if (objectState.isClustered) {
+                            that.objectManager.clusters.state.set('activeObject', object);
+                            that.objectManager.clusters.balloon.open(objectState.cluster.id);
+                        } else {
+                            that.objectManager.objects.balloon.open(id);
+                        }
+                    }
+                };
+                this.closePoint = function () {
+                    let that = this;
+                    if (that.map) {
+                        that.map.balloon.close();
+                    }
+                };
+                this.align();
+                this.load();
+                return this;
+            }
+
+            new ShippingCalcapishipCalculator();
+        });
+    })(jQuery);
+</script>

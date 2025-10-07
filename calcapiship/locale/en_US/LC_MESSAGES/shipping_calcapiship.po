@@ -1,0 +1,373 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wa-plugins/shipping/calcapiship\n"
+"POT-Creation-Date: 2019-12-04 20:07+0500\n"
+"PO-Revision-Date: \n"
+"Last-Translator: wa-plugins/shipping/calcapiship\n"
+"Language-Team: wa-plugins/shipping/calcapiship\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: utf-8\n"
+"Language: en_US\n"
+"X-Generator: Poedit 2.3\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: .\n"
+
+msgid "Delivery cost"
+msgstr ""
+
+msgid "Delivery time"
+msgstr ""
+
+msgid "Delivery type"
+msgstr ""
+
+msgid "Provider"
+msgstr ""
+
+msgid "Tariff"
+msgstr ""
+
+msgid "Point"
+msgstr ""
+
+msgid "Point type"
+msgstr ""
+
+msgid "Point code"
+msgstr ""
+
+msgid "Address"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Timetable"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Payment"
+msgstr ""
+
+msgid "Is presented"
+msgstr ""
+
+msgid "Is absent"
+msgstr ""
+
+msgid "Payment card"
+msgstr ""
+
+msgid "Fitting room"
+msgstr ""
+
+msgid "Point does not accept any payments"
+msgstr ""
+
+msgid "Payment card is absent"
+msgstr ""
+
+msgid "Fitting room is absent"
+msgstr ""
+
+msgid "Payment is presented"
+msgstr ""
+
+msgid "Payment card is presented"
+msgstr ""
+
+msgid "Fitting room is presented"
+msgstr ""
+
+msgid "Providers"
+msgstr ""
+
+msgid "Point types"
+msgstr ""
+
+msgid "cost from"
+msgstr ""
+
+msgid "time from"
+msgstr ""
+
+msgid "d."
+msgstr ""
+
+msgid "Filter"
+msgstr ""
+
+msgid "Filters points according to different options."
+msgstr ""
+
+msgid "Select"
+msgstr ""
+
+msgid "Weight"
+msgstr ""
+
+msgid "g"
+msgstr ""
+
+msgid "Length"
+msgstr ""
+
+msgid "cm"
+msgstr ""
+
+msgid "Width"
+msgstr ""
+
+msgid "Height"
+msgstr ""
+
+msgid "Apply this weight always"
+msgstr ""
+
+msgid "Input a dispatch address"
+msgstr ""
+
+msgid "Something has gone wrong"
+msgstr ""
+
+msgid "Weight is empty"
+msgstr ""
+
+msgid "Weight and dimensions are empty"
+msgstr ""
+
+msgid "Choose at least one provider"
+msgstr ""
+
+msgid "Choose at least one delivery type"
+msgstr ""
+
+msgid "Choose at least one pickup type"
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "Region"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "Street"
+msgstr ""
+
+msgid "Input a delivery address"
+msgstr ""
+
+msgid "No suitable options"
+msgstr ""
+
+msgid "Point IML ID"
+msgstr ""
+
+msgid "Rules"
+msgstr ""
+
+msgid "Could be specified one or more rules"
+msgstr ""
+
+msgid "Rules are executed in the order specified in the settings"
+msgstr ""
+
+msgid "If two alike rules are specified, for example, \"Increase a shipping time for 1 day\" and \"Increase a shipping time for 2 days\", the shipping time will be increased fo 3 days"
+msgstr ""
+
+msgid "Total shipping cost and time will not be less than zero"
+msgstr ""
+
+msgid "Rule value should contain integer or decimal only"
+msgstr ""
+
+msgid "Tariffs"
+msgstr ""
+
+msgid "Choose at least one tariff"
+msgstr ""
+
+msgid "To get providers, choose a test mode or input a correct username and password"
+msgstr ""
+
+msgid "To get delivery types, choose a test mode or input a correct username and password"
+msgstr ""
+
+msgid "To get pickup types, choose a test mode or input a correct username and password"
+msgstr ""
+
+msgid "Choose a test mode or input a correct username and password"
+msgstr ""
+
+msgid "Weight should be greater than zero and contain integer only"
+msgstr ""
+
+msgid "Weight and dimensions be greater than zero and contain integer only"
+msgstr ""
+
+msgid "Choose at least one tariff of the provider"
+msgstr ""
+
+msgid "Courier"
+msgstr ""
+
+msgid "Pickup"
+msgstr ""
+
+msgid "Post"
+msgstr ""
+
+msgid "Select a rule"
+msgstr ""
+
+msgid "Raise a shipping cost by"
+msgstr ""
+
+msgid "Reduce a shipping cost by"
+msgstr ""
+
+msgid "Fix a shipping cost at"
+msgstr ""
+
+msgid "Extend a minimum shipping time by"
+msgstr ""
+
+msgid "Shorten a minimum shipping time by"
+msgstr ""
+
+msgid "Fix a minimum shipping time at"
+msgstr ""
+
+msgid "Extend a maximum shipping time by"
+msgstr ""
+
+msgid "Shorten a maximum shipping time by"
+msgstr ""
+
+msgid "Fix a maximum shipping time at"
+msgstr ""
+
+msgid "days"
+msgstr ""
+
+msgid "from the shipping cost"
+msgstr ""
+
+msgid "from the original shipping cost"
+msgstr ""
+
+msgid "from the order cost"
+msgstr ""
+
+msgid "Calculates a shipping cost and time with the service https://apiship.ru."
+msgstr ""
+
+msgid "Test mode"
+msgstr ""
+
+msgid "Username"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Delivery address"
+msgstr ""
+
+msgid "Delivery country"
+msgstr ""
+
+msgid "Delivery region"
+msgstr ""
+
+msgid "Delivery city"
+msgstr ""
+
+msgid "Dispatch address"
+msgstr ""
+
+msgid "Dispatch country"
+msgstr ""
+
+msgid "Dispatch region"
+msgstr ""
+
+msgid "Dispatch city"
+msgstr ""
+
+msgid "Dispatch street"
+msgstr ""
+
+msgid "Entire order weight, when the weight of each product in the cart is not indicated in the value of the feature with the code \"weight\""
+msgstr ""
+
+msgid "Weight and dimensions"
+msgstr ""
+
+msgid "Dispatch dimensions depending on the order weigh"
+msgstr ""
+
+msgid "Delivery types"
+msgstr ""
+
+msgid "Pickup types"
+msgstr ""
+
+msgid "Cheat sheet"
+msgstr ""
+
+msgid "To display delivery details in the notifications, place this code in the message templates"
+msgstr ""
+
+msgid "Estimated delivery time"
+msgstr ""
+
+msgid "Display point types"
+msgstr ""
+
+msgid "Display a filter by the point types on the map."
+msgstr ""
+
+msgid "Yandex.Maps API key"
+msgstr ""
+
+msgid "Get an API key in the <a href=\"https://developer.tech.yandex.ru/\" target=\"_blank\">developer dashboard</a>. Select \"JavaScript API and Geocoder HTTP API\" option."
+msgstr ""
+
+msgid "Shipping will be restricted to the selected country"
+msgstr ""
+
+msgid "Shipping will be restricted to the selected region"
+msgstr ""
+
+msgid "If shipping is provided only within specific localities, enter the locality names separated by comma."
+msgstr ""
+
+msgid "Sort results"
+msgstr ""
+
+msgid "Sort results by the selected option"
+msgstr ""
+
+msgid "Do not sort"
+msgstr ""
+
+msgid "By alphabet"
+msgstr ""
+
+msgid "By cost"
+msgstr ""
+
+msgid "Unsafe mode"
+msgstr ""
+
+msgid "A temporary solution to the problem \"cURL error 60: SSL certificate problem: certificate has expired\""
+msgstr ""

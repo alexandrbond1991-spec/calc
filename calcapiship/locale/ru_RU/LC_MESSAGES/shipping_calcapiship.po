@@ -1,0 +1,374 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wa-plugins/shipping/calcapiship\n"
+"POT-Creation-Date: 2019-12-04 20:07+0500\n"
+"PO-Revision-Date: \n"
+"Last-Translator: wa-plugins/shipping/calcapiship\n"
+"Language-Team: wa-plugins/shipping/calcapiship\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=((((n%10)==1)&&((n%100)!=11))?(0):(((((n%10)>=2)&&((n%10)<=4))&&(((n%100)<10)||((n%100)>=20)))?(1):2));\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: utf-8\n"
+"Language: ru_RU\n"
+"X-Generator: Poedit 2.3\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: .\n"
+
+msgid "Delivery cost"
+msgstr "Стоимость доставки"
+
+msgid "Delivery time"
+msgstr "Срок доставки"
+
+msgid "Delivery type"
+msgstr "Тип доставки"
+
+msgid "Provider"
+msgstr "Поставщик услуг"
+
+msgid "Tariff"
+msgstr "Тариф"
+
+msgid "Point"
+msgstr "ПВЗ"
+
+msgid "Point type"
+msgstr "Тип ПВЗ"
+
+msgid "Point code"
+msgstr "Код ПВЗ"
+
+msgid "Address"
+msgstr "Адрес"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Timetable"
+msgstr "График работы"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Payment"
+msgstr "Оплата"
+
+msgid "Is presented"
+msgstr "Есть"
+
+msgid "Is absent"
+msgstr "Нет"
+
+msgid "Payment card"
+msgstr "Оплата кредитной картой"
+
+msgid "Fitting room"
+msgstr "Примерочная комната"
+
+msgid "Point does not accept any payments"
+msgstr "ПВЗ не принимает оплату в любой форме"
+
+msgid "Payment card is absent"
+msgstr "Нет оплаты картой"
+
+msgid "Fitting room is absent"
+msgstr "Нет примерочной"
+
+msgid "Payment is presented"
+msgstr "Есть оплата"
+
+msgid "Payment card is presented"
+msgstr "Есть оплата картой"
+
+msgid "Fitting room is presented"
+msgstr "Есть примерочная"
+
+msgid "Providers"
+msgstr "Поставщики услуг"
+
+msgid "Point types"
+msgstr "Типы ПВЗ"
+
+msgid "cost from"
+msgstr "цена от"
+
+msgid "time from"
+msgstr "срок от"
+
+msgid "d."
+msgstr "д."
+
+msgid "Filter"
+msgstr "Фильтр"
+
+msgid "Filters points according to different options."
+msgstr "Фильтрует ПВЗ по разным параметрам."
+
+msgid "Select"
+msgstr "Выбрать"
+
+msgid "Weight"
+msgstr "Вес"
+
+msgid "g"
+msgstr "г"
+
+msgid "Length"
+msgstr "Длина"
+
+msgid "cm"
+msgstr "см"
+
+msgid "Width"
+msgstr "Ширина"
+
+msgid "Height"
+msgstr "Высота"
+
+msgid "Apply this weight always"
+msgstr "Применять этот вес всегда"
+
+msgid "Input a dispatch address"
+msgstr "Введите адрес отправки"
+
+msgid "Something has gone wrong"
+msgstr "Что-то пошло не так"
+
+msgid "Weight is empty"
+msgstr "Вес пуст"
+
+msgid "Weight and dimensions are empty"
+msgstr "Вес и габариты пусты"
+
+msgid "Choose at least one provider"
+msgstr "Выберите хотя бы одного поставщика услуг"
+
+msgid "Choose at least one delivery type"
+msgstr "Выберите хотя бы один тип доставки"
+
+msgid "Choose at least one pickup type"
+msgstr "Выберите хотя бы один тип приема"
+
+msgid "Country"
+msgstr "Страна"
+
+msgid "Region"
+msgstr "Регион"
+
+msgid "City"
+msgstr "Город"
+
+msgid "Street"
+msgstr "Улица, дом, квартира"
+
+msgid "Input a delivery address"
+msgstr "Введите адрес доставки"
+
+msgid "No suitable options"
+msgstr "Нет подходящих вариантов"
+
+msgid "Point IML ID"
+msgstr "ID ПВЗ IML"
+
+msgid "Rules"
+msgstr "Правила"
+
+msgid "Could be specified one or more rules"
+msgstr "Может быть указано одно или несколько правил"
+
+msgid "Rules are executed in the order specified in the settings"
+msgstr "Правила выполняются по указанному в настройках порядку"
+
+msgid "If two alike rules are specified, for example, \"Increase a shipping time for 1 day\" and \"Increase a shipping time for 2 days\", the shipping time will be increased fo 3 days"
+msgstr "Если указано два одинаковых правила, например, \"Увеличить сроки доставки на 1 день\" и \"Увеличить сроки доставки на 2 дня\", то сроки доставки увеличатся на 3 дня"
+
+msgid "Total shipping cost and time will not be less than zero"
+msgstr "Итоговые стоимость и срок доставки не будут меньше нуля"
+
+msgid "Rule value should contain integer or decimal only"
+msgstr "Значение правила должно содержать только целые или десятичные числа"
+
+msgid "Tariffs"
+msgstr "Тарифы"
+
+msgid "Choose at least one tariff"
+msgstr "Выберите хотя бы один тариф"
+
+msgid "To get providers, choose a test mode or input a correct username and password"
+msgstr "Чтобы получить поставщиков услуг, выберите тестовый режим или введите правильный логин и пароль"
+
+msgid "To get delivery types, choose a test mode or input a correct username and password"
+msgstr "Чтобы получить типы доставки, выберите тестовый режим или введите правильный логин и пароль"
+
+msgid "To get pickup types, choose a test mode or input a correct username and password"
+msgstr "Чтобы получить типы приема, выберите тестовый режим или введите правильный логин и пароль"
+
+msgid "Choose a test mode or input a correct username and password"
+msgstr "Выберите тестовый режим или введите правильный логин и пароль"
+
+msgid "Weight should be greater than zero and contain integer only"
+msgstr "Вес должен быть больше нуля и содержать только целые числа"
+
+msgid "Weight and dimensions be greater than zero and contain integer only"
+msgstr "Вес и габариты должны быть больше нуля и содержать только целые числа"
+
+msgid "Choose at least one tariff of the provider"
+msgstr "Выберите хотя бы один тариф поставщика услуг"
+
+msgid "Courier"
+msgstr "Курьер"
+
+msgid "Pickup"
+msgstr "Самовывоз"
+
+msgid "Post"
+msgstr "Почта"
+
+msgid "Select a rule"
+msgstr "Выберите правило"
+
+msgid "Raise a shipping cost by"
+msgstr "Повысить стоимость доставки на"
+
+msgid "Reduce a shipping cost by"
+msgstr "Понизить стоимость доставки на"
+
+msgid "Fix a shipping cost at"
+msgstr "Зафиксировать стоимость доставки на"
+
+msgid "Extend a minimum shipping time by"
+msgstr "Продлить минимальный срок доставки на"
+
+msgid "Shorten a minimum shipping time by"
+msgstr "Сократить минимальный срок доставки на"
+
+msgid "Fix a minimum shipping time at"
+msgstr "Зафиксировать минимальный срок доставки на"
+
+msgid "Extend a maximum shipping time by"
+msgstr "Продлить максимальный срок доставки на"
+
+msgid "Shorten a maximum shipping time by"
+msgstr "Сократить максимальный срок доставки на"
+
+msgid "Fix a maximum shipping time at"
+msgstr "Зафиксировать максимальный срок доставки на"
+
+msgid "days"
+msgstr "дней"
+
+msgid "from the shipping cost"
+msgstr "от стоимости доставки"
+
+msgid "from the original shipping cost"
+msgstr "от оригинальной стоимости доставки"
+
+msgid "from the order cost"
+msgstr "от стоимости заказа"
+
+msgid "Calculates a shipping cost and time with the service https://apiship.ru."
+msgstr "Расчитывает стоимость и время доставки согласно службе https://apiship.ru."
+
+msgid "Test mode"
+msgstr "Тестовый режим"
+
+msgid "Username"
+msgstr "Логин"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Delivery address"
+msgstr "Адрес доставки"
+
+msgid "Delivery country"
+msgstr "Страна доставки"
+
+msgid "Delivery region"
+msgstr "Регион доставки"
+
+msgid "Delivery city"
+msgstr "Город доставки"
+
+msgid "Dispatch address"
+msgstr "Адрес отправки"
+
+msgid "Dispatch country"
+msgstr "Страна отправки"
+
+msgid "Dispatch region"
+msgstr "Регион отправки"
+
+msgid "Dispatch city"
+msgstr "Город отправки"
+
+msgid "Dispatch street"
+msgstr "Улица, дом, квартира отправки"
+
+msgid "Entire order weight, when the weight of each product in the cart is not indicated in the value of the feature with the code \"weight\""
+msgstr "Вес всего заказа, когда вес каждого товара в корзине не указан в значении характеристики с кодом \"weight\""
+
+msgid "Weight and dimensions"
+msgstr "Вес и габариты"
+
+msgid "Dispatch dimensions depending on the order weigh"
+msgstr "Габариты отправки в зависимости от веса заказа"
+
+msgid "Delivery types"
+msgstr "Типы доставки"
+
+msgid "Pickup types"
+msgstr "Типы приема"
+
+msgid "Cheat sheet"
+msgstr "Шпаргалка"
+
+msgid "To display delivery details in the notifications, place this code in the message templates"
+msgstr "Чтобы отобразить сведения о доставке в уведомлениях, поместите этот код в шаблоны сообщений"
+
+msgid "Estimated delivery time"
+msgstr "Приблизительный срок доставки"
+
+msgid "Display point types"
+msgstr "Отобразить типы ПВЗ"
+
+msgid "Display a filter by the point types on the map."
+msgstr "Отобразить фильтр типов ПВЗ на карте."
+
+msgid "Yandex.Maps API key"
+msgstr "Ключ API Яндекс.Карты"
+
+msgid "Get an API key in the <a href=\"https://developer.tech.yandex.ru/\" target=\"_blank\">developer dashboard</a>. Select \"JavaScript API and Geocoder HTTP API\" option."
+msgstr "Получите ключ API Яндекс.Карты в <a href=\"https://developer.tech.yandex.ru/\" target=\"_blank\">кабинете разработчика</a>. Выберите тип карт \"JavaScript API и HTTP Геокодер\"."
+
+msgid "Shipping will be restricted to the selected country"
+msgstr "Доставка будет ограничена выбранной страной"
+
+msgid "Shipping will be restricted to the selected region"
+msgstr "Доставка будет ограничена выбранным регионом"
+
+msgid "If shipping is provided only within specific localities, enter the locality names separated by comma."
+msgstr "Если доставка доступна только в определенных населенных пунктах, введите их названия через запятую."
+
+msgid "Sort results"
+msgstr "Сортировать результаты"
+
+msgid "Sort results by the selected option"
+msgstr "Сортировать результаты по выбранному варианту"
+
+msgid "Do not sort"
+msgstr "Не сортировать"
+
+msgid "By alphabet"
+msgstr "По алфавиту"
+
+msgid "By cost"
+msgstr "По цене"
+
+msgid "Unsafe mode"
+msgstr "Небезопасный режим"
+
+msgid "A temporary solution to the problem \"cURL error 60: SSL certificate problem: certificate has expired\""
+msgstr "Временное решение проблемы \"ошибка cURL 60: проблема с сертификатом SSL: срок действия сертификата истек\""

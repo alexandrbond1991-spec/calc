@@ -1,0 +1,26 @@
+{if $params.value.force}
+{assign var="checked" value="checked"}
+{else}
+{assign var="checked" value=""}
+{/if}
+<div class="block not-padded">
+    <input type="text" name="{$name}[weight]" value="{$params.value.weight}" id="{$params.id}_weight" size="8">
+    <input type="checkbox" name="{$name}[force]" value="1" id="{$params.id}_force" {$checked}>
+    <label for="{$params.id}_force">{$p->_w('Apply this weight always')}</label>
+</div>
+<script>
+    'use strict';
+    (function ($) {
+        $(document).ready(function () {
+            $('#{$params.id}_weight').on('keypress keyup blur', function (e) {
+                $(this).val($(this).val().replace(/[^0-9]/g, ''));
+                if (
+                    e.which < 48 ||
+                    e.which > 57
+                ) {
+                    e.preventDefault();
+                }
+            });
+        });
+    })(jQuery);
+</script>

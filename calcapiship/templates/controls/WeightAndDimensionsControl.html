@@ -1,0 +1,100 @@
+<div class="block not-padded">
+    <table class="zebra" id="{$params.id}" style="width: auto">
+        <thead>
+        <tr>
+            <th></th>
+            <th>
+                <nobr>
+                    [`Weight`] ([`g`])
+                </nobr>
+            </th>
+            <th></th>
+            <th>
+                <nobr>
+                    [`Length`] ([`cm`])
+                </nobr>
+            </th>
+            <th></th>
+            <th>
+                <nobr>
+                    [`Width`] ([`cm`])
+                </nobr>
+            </th>
+            <th></th>
+            <th>
+                <nobr>
+                    [`Height`] ([`cm`])
+                </nobr>
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {section name=i loop=$params.value.weight}
+        <tr>
+            <td>&le;</td>
+            <td>
+                <input type="text" name="{$name}[weight][]" value="{$params.value.weight[i]}" size="8">
+            </td>
+            <td>&rarr;</td>
+            <td>
+                <input type="text" name="{$name}[length][]" value="{$params.value.length[i]}" size="8">
+            </td>
+            <td>&Cross;</td>
+            <td>
+                <input type="text" name="{$name}[width][]" value="{$params.value.width[i]}" size="8">
+            </td>
+            <td>&Cross;</td>
+            <td>
+                <input type="text" name="{$name}[height][]" value="{$params.value.height[i]}" size="8">
+            </td>
+            <td>
+                <i class="icon16 delete"></i>
+            </td>
+        </tr>
+        {/section}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="9">
+                <i class="icon16 add"></i>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<style>
+    .zebra .add,
+    .zebra .delete {
+        cursor: pointer;
+    }
+</style>
+<script>
+    'use strict';
+    (function ($) {
+        $(document).ready(function () {
+            $('#{$params.id}').on('keypress keyup blur', 'input', function (e) {
+                $(this).val($(this).val().replace(/[^0-9]/g, ''));
+                if (
+                    e.which < 48 ||
+                    e.which > 57
+                ) {
+                    e.preventDefault();
+                }
+            });
+            $('#{$params.id}').on('click', '.add', function (e) {
+                e.preventDefault();
+                let tr = $('#{$params.id} tbody tr:last').clone();
+                tr.find(':input').val(null);
+                tr.appendTo($('#{$params.id} tbody'));
+                $('#{$params.id} tbody tr:last input:first').focus();
+            });
+            $('#{$params.id}').on('click', '.delete', function (e) {
+                e.preventDefault();
+                if ($('#{$params.id} tbody tr').length > 1) {
+                    $(this).closest('tr').remove();
+                }
+            });
+        });
+    })(jQuery);
+</script>

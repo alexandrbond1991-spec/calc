@@ -1,0 +1,86 @@
+<div class="block not-padded">
+    <div id="{$params.id}">
+        {$country_control}
+        {$region_control}
+        <p class="hint">{$p->_w('If shipping is provided only within specific localities, enter the locality names separated by comma.')}</p>
+        {$city_control}
+    </div>
+</div>
+<style>
+    .add,
+    .delete {
+        cursor: pointer;
+    }
+</style>
+<script>
+    'use strict';
+    (function ($) {
+        $(document).ready(function () {
+            $('#{$params.id}').find('.field').css('clear', 'none');
+            $('#{$params.id}').find('select[name="shipping[settings][delivery_address][country]"]').on('change', function (e) {
+                $('#{$params.id}').find('.delete').each(function (index) {
+                    $(this).parent().remove();
+                });
+                $('#{$params.id}').find('input[name="shipping[settings][delivery_address][city]"]').val('');
+                getRegions();
+            });
+            getRegions(true);
+            $('#{$params.id}').on('click', '.add', function (e) {
+                e.preventDefault();
+                let region = $(this).parent().clone();
+                region.find('select[name="shipping[settings][delivery_address][region][]"]').val(null);
+                region.find('.icon16').removeClass('add').addClass('delete');
+                $('#{$params.id}').find('select[name="shipping[settings][delivery_address][region][]"]:last').parent().after(region);
+            });
+            $('#{$params.id}').on('click', '.delete', function (e) {
+                e.preventDefault();
+                $(this).parent().remove();
+            });
+
+            function getRegions(force = false) {
+                let isLoading = false;
+                if (!isLoading) {
+                    isLoading = true;
+                    $.ajax({
+                        url: '{$wa_backend_url}?module=backend&action=regions',
+                        data: {
+                            'country': $('#{$params.id}').find('select[name="shipping[settings][delivery_address][country]"]').val(),
+                        },
+                        dataType: 'json',
+                        type: 'post',
+                        success: function (response) {
+                            $('#{$params.id}').find('select[name="shipping[settings][delivery_address][region][]"]').find('option').not(':first').remove();
+                            if (
+                                response.data &&
+                                response.data.options &&
+                                response.data.oOrder &&
+                                response.data.oOrder.length
+                            ) {
+                                for (let i = 0; i < response.data.oOrder.length; i++) {
+                                    $('#{$params.id}').find('select[name="shipping[settings][delivery_address][region][]"]')
+                                        .append('<option value="' + response.data.oOrder[i] + '">' + response.data.options[response.data.oOrder[i]] + '</option>');
+                                }
+                                if (force) {
+                                    $.each(JSON.parse('{$params.value.region|json_encode}'), function (key, value) {
+                                        if (key) {
+                                            let region = $('#{$params.id}').find('select[name="shipping[settings][delivery_address][region][]"]:first').parent().clone();
+                                            region.find('select[name="shipping[settings][delivery_address][region][]"]').val(value);
+                                            region.find('.icon16').removeClass('add').addClass('delete');
+                                            $('#{$params.id}').find('select[name="shipping[settings][delivery_address][region][]"]:last').parent().after(region);
+
+                                        } else {
+                                            $('#{$params.id}').find('select[name="shipping[settings][delivery_address][region][]"]:first').val(value);
+                                        }
+                                    });
+                                }
+                            }
+                        },
+                        complete: function () {
+                            isLoading = false;
+                        }
+                    });
+                }
+            }
+        });
+    })(jQuery);
+</script>
