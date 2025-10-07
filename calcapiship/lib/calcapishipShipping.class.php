@@ -2420,18 +2420,72 @@ class calcapishipShipping extends waShipping
             $timestamp = time();
         }
 
-        $weekend_days = $this->getStorefrontWeekendDays();
-        if (empty($weekend_days)) {
-            return $timestamp;
-        }
-
-        $limit = 14;
-        while (in_array((int) waDateTime::date('w', $timestamp), $weekend_days, true) && $limit > 0) {
+        $limit = 31;
+        while (!$this->isStorefrontWorkingDay($timestamp) && $limit > 0) {
             $timestamp = strtotime('+1 day', $timestamp);
             $limit--;
         }
 
         return $timestamp;
+    }
+
+    /**
+     * Checks whether storefront schedule marks timestamp day as working
+     *
+     * @param int $timestamp
+     * @return bool
+     */
+    private function isStorefrontWorkingDay($timestamp)
+    {
+        static $schedule = null;
+
+        if ($schedule === null) {
+            $schedule = $this->getStorefrontSchedule();
+        }
+
+        $date = waDateTime::date('Y-m-d', $timestamp);
+        if (!empty($schedule['dates']) && is_array($schedule['dates']) && array_key_exists($date, $schedule['dates'])) {
+            $date_status = $this->isWorkingDayEntry($schedule['dates'][$date]);
+            if ($date_status !== null) {
+                return $date_status;
+            }
+        }
+
+        $weekday = (int) waDateTime::date('w', $timestamp);
+
+        $weekend_days = $this->getStorefrontWeekendDays();
+        if (!empty($weekend_days) && in_array($weekday, $weekend_days, true)) {
+            return false;
+        }
+
+        if (!empty($schedule['days']) && is_array($schedule['days']) && array_key_exists($weekday, $schedule['days'])) {
+            $day_status = $this->isWorkingDayEntry($schedule['days'][$weekday]);
+            if ($day_status !== null) {
+                return $day_status;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Determines if schedule entry marks day as working
+     *
+     * @param mixed $entry
+     * @return bool|null True for working day, false for weekend, null if undefined
+     */
+    private function isWorkingDayEntry($entry)
+    {
+        if (is_array($entry)) {
+            if (array_key_exists('weekend', $entry)) {
+                return !(bool) $entry['weekend'];
+            }
+            if (array_key_exists('status', $entry)) {
+                return $entry['status'] !== 'weekend';
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -2493,10 +2547,18 @@ class calcapishipShipping extends waShipping
      */
     private function getStorefrontSchedule()
     {
+        static $cache = array();
+
         $storefront = $this->getStorefrontIdentifier();
         if (empty($storefront) || !class_exists('waModel')) {
             return array();
         }
+
+        if (array_key_exists($storefront, $cache)) {
+            return $cache[$storefront];
+        }
+
+        $cache[$storefront] = array();
 
         try {
             $model = new waModel();
@@ -2505,14 +2567,15 @@ class calcapishipShipping extends waShipping
             if (!empty($value)) {
                 $decoded = @json_decode($value, true);
                 if (is_array($decoded)) {
-                    return $decoded;
+                    $cache[$storefront] = $decoded;
+                    return $cache[$storefront];
                 }
             }
         } catch (Exception $e) {
             // ignore database errors
         }
 
-        return array();
+        return $cache[$storefront];
     }
 
     /**
